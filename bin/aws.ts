@@ -1,10 +1,32 @@
 #!/usr/bin/env node
-import 'source-map-support/register';
-import * as cdk from 'aws-cdk-lib';
-import { AwsStack } from '../lib/aws-stack';
+import "source-map-support/register";
+import * as cdk from "aws-cdk-lib";
+import { SimpleAppStack } from "../lib/aws-stack";
+import { HostedZone } from "../lib/rout52-stack";
+
+const dnsName = "kav.digital";
+const AWS_REGION = "ap-southeast-2";
+enum Env {
+  DEV = "dev",
+  PROD = "prod",
+}
 
 const app = new cdk.App();
-new AwsStack(app, 'AwsStack', {
+const { hostedZone, certificate } = new HostedZone(
+  app,
+  `SimpleAppHostedZone-${Env.DEV}`,
+  {
+    env: { region: AWS_REGION },
+    dnsName,
+    envName: Env.DEV,
+  }
+);
+new SimpleAppStack(app, `SimpleAppTest-${Env.DEV}`, {
+  env: { region: AWS_REGION },
+  envName: Env.DEV,
+  hostedZone,
+  certificate,
+  dnsName,
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */
@@ -19,3 +41,8 @@ new AwsStack(app, 'AwsStack', {
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
+
+// new SimpleAppStack(app, `SimpleAppTest-${Env.PROD}`,{
+//   env: { region: 'us-east-2' },
+//   envName: Env.PROD
+// })
