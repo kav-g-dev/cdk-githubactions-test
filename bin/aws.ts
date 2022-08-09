@@ -4,8 +4,8 @@ import * as cdk from "aws-cdk-lib";
 import { SimpleAppStack } from "../lib/aws-stack";
 import { HostedZone } from "../lib/rout52-stack";
 
-const dnsName = "kav.digital";
-const AWS_REGION = "ap-southeast-2";
+const dnsName = "kav-dev.store";
+const AWS_REGION = "us-east-1";
 enum Env {
   DEV = "dev",
   PROD = "prod",
