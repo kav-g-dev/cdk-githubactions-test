@@ -7,7 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print files
-        run: ls -a
+        run: |
+          ls -a
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_SHA
+          echo ${{ github.token }}
       - name: Checkout Actions
         uses: actions/checkout@v1
       - name: Print files after checkout
