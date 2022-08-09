@@ -1,0 +1,15 @@
+name: Using Actions
+
+on: [push]
+
+jobs:
+  use-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print files
+        run: ls -a
+      - name: Checkout Actions
+        uses: actions/checkout@v1
+      - name: Print files after checkout
+        run: ls -a
+      
