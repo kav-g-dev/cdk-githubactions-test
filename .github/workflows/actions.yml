@@ -13,6 +13,10 @@ jobs:
   use-actions:
     runs-on: ubuntu-latest
     steps:
+      - name: Payload from repo dispatch
+        run: echo ${{ github.event.client_payload.env }}
+      - name: Print all ENV values
+        run: env
       - name: Print files
         run: |
           ls -a
