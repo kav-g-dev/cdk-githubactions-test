@@ -1,6 +1,13 @@
 name: Using Actions
 
-on: [push]
+on:
+  repository_dispatch:
+    types: [build]
+  # schedule:
+  #   - cron: "0/5 * * * *" # runs every 5 mins -> the min time github can repeat as of 12/08/2022
+  # push:
+  pull_request:
+    types: [closed, assigned, opened, reopened]
 
 jobs:
   use-actions:
