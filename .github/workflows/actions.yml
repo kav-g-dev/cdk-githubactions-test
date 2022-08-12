@@ -22,9 +22,6 @@ on:
 env:
   WF_ENV: Workflow env
 
-permissions:
-  contents: write
-
 
 jobs:
   use-actions:
@@ -58,8 +55,6 @@ jobs:
   
   create_issue:
     runs-on: ubuntu-latest
-    permissions:
-      issues: write 
     steps:
       - name: Push a random file
         run: |
@@ -67,26 +62,18 @@ jobs:
           ls -a
           git init
           git branch -m main
-          git remote add origin "https://$GITHUB_ACTOR:${{secrets.GITHUB_TOKEN}}@github.com/$GITHUB_REPOSITORY.git"
+          git remote add origin "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
           git config --global user.name "my-action-bot"
           git config --global user.email "my-action-bot@kav.com"
           git fetch
           git checkout main
           git branch --set-upstream-to=origin/main
           git pull
-          ls -a
-          export RANDOM_ENV=$RANDOM
-          echo $RANDOM_ENV
-          echo $RANDOM_ENV >> random.txt
+          echo $RANDOM >> random.txt
           ls -a
           git add -A
           git commit -m "Random file"
-          echo ${{ secrets.GITHUB_TOKEN }}
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
       # - name: Create issue using REST API
       #   run: |
       #     curl --request POST \
