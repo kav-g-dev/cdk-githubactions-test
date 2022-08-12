@@ -53,7 +53,7 @@ jobs:
       - name: Print files after checkout
         run: ls -a
   
-  create_issue:
+  Push_Random_file:
     runs-on: ubuntu-latest
     steps:
       - name: Push a random file
@@ -74,14 +74,18 @@ jobs:
           git add -A
           git commit -m "Random file"
           git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
-      # - name: Create issue using REST API
-      #   run: |
-      #     curl --request POST \
-      #     --url https://api.github.com/repos/${{ github.repository }}/issues \
-      #     --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-      #     --header 'content-type: application/json' \
-      #     --data '{
-      #       "title": "Automated issue for commit: ${{ github.sha }}",
-      #       "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_."
-      #       }' \
-      #     --fail
+  Create_issue:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'repository_dispatch' && github.event.action == 'build'}}
+    steps:
+      - name: Create issue using REST API
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/${{ github.repository }}/issues \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{
+            "title": "Automated issue for commit: ${{ github.sha }}",
+            "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_."
+            }' \
+          --fail
