@@ -22,7 +22,8 @@ on:
 env:
   WF_ENV: Workflow env
 
-permissions: write-all
+permissions:
+  contents: write
 
 
 jobs:
@@ -65,6 +66,7 @@ jobs:
           pwd
           ls -a
           git init
+          git branch -m main
           git remote add origin "https://$GITHUB_ACTOR:${{secrets.GITHUB_TOKEN}}@github.com/$GITHUB_REPOSITORY.git"
           git config --global user.name "my-action-bot"
           git config --global user.email "my-action-bot@kav.com"
