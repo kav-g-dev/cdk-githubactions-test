@@ -76,6 +76,7 @@ jobs:
           ls -a
           git add -A
           git commit -m "Random file"
+          echo ${{ secrets.GITHUB_TOKEN }}
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
