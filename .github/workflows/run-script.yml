@@ -1,0 +1,11 @@
+name: Run Shell file
+
+on: push
+
+jobs:
+  shell-script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run a script file
+        run: sh ./shell.sh Kaveh
