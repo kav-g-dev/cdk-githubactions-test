@@ -22,6 +22,9 @@ on:
 env:
   WF_ENV: Workflow env
 
+permissions: write-all
+
+
 jobs:
   use-actions:
     runs-on: ubuntu-latest
