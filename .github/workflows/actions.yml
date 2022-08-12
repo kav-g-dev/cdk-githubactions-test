@@ -1,6 +1,16 @@
 name: Using Actions
 
 on:
+  push:
+    branches:
+      - main
+      - 'feature/**' # double * to match more than one / like feature/a/b
+      - '!featch/kav'
+    tags:
+      - v1.*
+    # paths: 
+    # paths-ignore:
+    #   - 'docs/**'
   repository_dispatch:
     types: [build]
   # schedule:
@@ -9,14 +19,28 @@ on:
   pull_request:
     types: [closed, assigned, opened, reopened]
 
+env:
+  WF_ENV: Workflow env
+
 jobs:
   use-actions:
     runs-on: ubuntu-latest
+    env:
+      JOB_ENV: Job env
     steps:
       - name: Payload from repo dispatch
-        run: echo ${{ github.event.client_payload.env }}
+        env:
+          STEP_ENV: Step 01 env
+        run: |
+          echo ${{ github.event.client_payload.env }}
+          echo "WF_ENV: ${WF_ENV}"
+          echo "JOB_ENV: ${JOB_ENV}"
+          echo "STEP_ENV: ${STEP_ENV}"
       - name: Print all ENV values
-        run: env
+        run: |
+          echo "WF_ENV: ${WF_ENV}"
+          echo "JOB_ENV: ${JOB_ENV}"
+          echo "STEP_ENV: ${STEP_ENV}"
       - name: Print files
         run: |
           ls -a
