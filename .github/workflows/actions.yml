@@ -1,18 +1,18 @@
 name: Using Actions
 
 on:
-  push:
-    branches:
-      - main
-      - 'feature/**' # double * to match more than one / like feature/a/b
-      - '!featch/kav'
-    tags:
-      - v1.*
-    # paths: 
-    # paths-ignore:
-    #   - 'docs/**'
-  repository_dispatch:
-    types: [build]
+  # push:
+  #   branches:
+  #     - main
+  #     - 'feature/**' # double * to match more than one / like feature/a/b
+  #     - '!featch/kav'
+  #   tags:
+  #     - v1.*
+  #   # paths: 
+  #   # paths-ignore:
+  #   #   - 'docs/**'
+  # repository_dispatch:
+  #   types: [build]
   # schedule:
   #   - cron: "0/5 * * * *" # runs every 5 mins -> the min time github can repeat as of 12/08/2022
   # push:
